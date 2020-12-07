@@ -10,20 +10,24 @@ public class Crawler {
     private ArrayList<String> linkList;
     private ArrayList<Visited> visitedLinks;
 
-    private Crawler() {
+    private Crawler(UserData arguments, Threads multithread) {
         this.arguments = arguments;
         this.multithread = multithread;
-        this.linkList = linkList;
-        this.visitedLinks = visitedLinks;
+        this.linkList = new ArrayList<>();
+        this.visitedLinks = new ArrayList<>();
     }
 
     public void run() {
 
     }
 
-    public static Crawler getInstance() {
+    public int getNoOfThreads() {
+        return arguments.getNoOfThreads();
+    }
+
+    public static Crawler getInstance(UserData arguments, Threads multithread) {
         if (instance == null)
-            instance = new Crawler();
+            instance = new Crawler(arguments, multithread);
 
         return instance;
     }
