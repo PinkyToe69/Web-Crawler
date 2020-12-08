@@ -1,4 +1,8 @@
 package WebCrawler;
 
-public class ParserFile {
+public class ParserFile implements Parser {
+
+    public void parse() {
+
+    }
 }

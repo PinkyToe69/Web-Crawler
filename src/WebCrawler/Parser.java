@@ -1,4 +1,10 @@
 package WebCrawler;
 
-public class Parser {
+import java.io.FileInputStream;
+
+public interface Parser {
+
+    FileInputStream file = null;
+
+    public void parse();
 }
