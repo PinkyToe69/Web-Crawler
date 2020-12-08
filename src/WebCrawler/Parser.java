@@ -1,10 +1,8 @@
 package WebCrawler;
 
-import java.io.FileInputStream;
+import java.io.IOException;
 
 public interface Parser {
 
-    FileInputStream file = null;
-
-    public void parse();
+    public void parse() throws IOException;
 }
