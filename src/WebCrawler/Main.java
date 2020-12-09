@@ -2,9 +2,10 @@ package WebCrawler;
 
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        System.out.print("Hello World!");
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        Crawler crawler = Crawler.getInstance().run();
     }
 }
