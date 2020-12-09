@@ -1,0 +1,7 @@
+n_threads=50
+depth_level=5
+delay=100
+root_dir=D:/Download
+option_robot=no
+preferences=idk
+log_level=3

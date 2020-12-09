@@ -1,5 +1,6 @@
 package WebCrawler;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class UserData {
@@ -7,22 +8,23 @@ public class UserData {
     private int noOfThreads;
     private int depthLevel;
     private int delay;
+    private int logLevel;
     private String rootFolder;
     private String optionRobot;
     private String preferences;
     private ArrayList<String> urlList;
     private ParserFile parser;
 
-    public UserData(int noOfThreads, int depthLevel, int delay, String rootFolder, String optionRobot,
-                    String preferences, ArrayList<String> urlList, ParserFile parser) {
-        this.noOfThreads = noOfThreads;
-        this.depthLevel = depthLevel;
-        this.delay = delay;
-        this.rootFolder = rootFolder;
-        this.optionRobot = optionRobot;
-        this.preferences = preferences;
+    public UserData(ParserFile parser) throws FileNotFoundException {
         this.urlList = new ArrayList<>();
-        this.parser = parser;
+        this.noOfThreads = Integer.parseInt(parser.arguments.get(0));
+        this.depthLevel = Integer.parseInt(parser.arguments.get(1));
+        this.delay = Integer.parseInt(parser.arguments.get(2));
+        this.rootFolder = parser.arguments.get(3);
+        this.optionRobot = parser.arguments.get(4);
+        this.preferences = parser.arguments.get(5);
+        this.logLevel = Integer.parseInt(parser.arguments.get(6));
+        this.urlList = parser.urlList;
     }
 
     public int getNoOfThreads() {
@@ -47,5 +49,13 @@ public class UserData {
 
     public String getPreferences() {
         return preferences;
+    }
+
+    public int getLogLevel() {
+        return logLevel;
+    }
+
+    public ArrayList<String> getUrlList() {
+        return urlList;
     }
 }
