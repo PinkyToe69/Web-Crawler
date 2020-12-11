@@ -24,9 +24,9 @@ public class Crawler {
         parser.parse();
         arguments = new UserData(parser);
         this.linkList = arguments.getUrlList();
-        /*for(String line : linkList){
-            System.out.println(line);
-        }*/
+    //    for(String line : linkList) {
+    //        System.out.println(line);
+    //    }
         return null;
     }
 
