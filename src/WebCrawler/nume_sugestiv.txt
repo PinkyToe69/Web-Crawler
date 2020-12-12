@@ -1,0 +1,3 @@
+.txt=.pdf=.doc
+.png=.jpg=.ico
+.js=.html
