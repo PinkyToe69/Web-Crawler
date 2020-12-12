@@ -1,25 +1,27 @@
 package WebCrawler;
 
+import java.util.ArrayList;
+
 public class Link {
 
-    private string content,currentLinkName,parrentLink;
+    private String content,currentLinkName,parrentLink;
     private ArrayList<String>childrenLinks;
-    public Link(string content,string currentLinkName,string parrentLink,ArrayList<String>childrenLinks){
+    public Link(String content,String currentLinkName,String parrentLink,ArrayList<String>childrenLinks){
         this.content=content;
         this.currentLinkName=currentLinkName;
         this.parrentLink=parrentLink;
         this.childrenLinks=childrenLinks;
     }
-    public string getLinkName(){
+    public String getLinkName(){
         return currentLinkName;
     }
-    public string getParrentLink(){
+    public String getParrentLink(){
         return parrentLink;
     }
     public ArrayList<String> getChildrenLink(){
         return childrenLinks;
     }
-    public string getContent(){
+    public String getContent(){
         return content;
     }
 
