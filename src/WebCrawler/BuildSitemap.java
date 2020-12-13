@@ -32,7 +32,7 @@ public class BuildSitemap {
         }
         fileWriter.write(root.getLinkName());
         fileWriter.write('\n');
-        ArrayList<String> childrenNames = root.getChildrenLink();
+        ArrayList<String> childrenNames = root.getChildrenLink(); // url-urile copiilor ca stringuri
         if(childrenNames == null){
             return;
         }
@@ -52,7 +52,7 @@ public class BuildSitemap {
                     int tabs = 0;
                     Link root = null;
                     for(int i = 0; i < visitedLinks.size(); i++){
-                        if(visitedLinks.get(i).getParrentLink() == null) {
+                        if(visitedLinks.get(i).getParrentLink() == null) { // e root-ul sitemapului
                             root = visitedLinks.get(i);
                             break;
                         }
