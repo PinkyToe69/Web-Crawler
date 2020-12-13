@@ -1,5 +1,5 @@
 n_threads=50
-depth_level=5
+depth_level=2
 delay=100
 root_dir=D:/Download
 option_robot=no
