@@ -32,6 +32,11 @@ public class BuildSitemap {
         }
         fileWriter.write(root.getLinkName());
         fileWriter.write('\n');
+       for(int k=0;k<root.getContent().size();k++) {
+            fileWriter.write(root.getContent().get(k));
+            fileWriter.write('\n');
+            fileWriter.write('\t');
+        }
         ArrayList<String> childrenNames = root.getChildrenLink(); // url-urile copiilor ca stringuri
         if(childrenNames == null){
             return;
