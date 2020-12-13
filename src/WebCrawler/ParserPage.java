@@ -17,40 +17,40 @@ public class ParserPage implements Parser {
     public ParserPage(String url) {
 
         this.linkList = new ArrayList<>();
-        this.linkContent=new ArrayList<>();
+        this.linkContent = new ArrayList<>();
         this.url = new String();
         this.url = url;
         this.urlContent = new String();
-        this.filePath=new String("src/WebCrawler/nume_sugestiv.txt");
+        this.filePath = new String("src/WebCrawler/nume_sugestiv.txt");
     }
 
     public ArrayList<String> getLinkList() {
-       // for (int i = 0; i < linkList.size(); i++) {
-       //     System.out.print(linkList.get(i).toString());
-       //     System.out.print("\n");
-       // //}
+        //for (int i = 0; i < linkList.size(); i++) {
+            //System.out.print(linkList.get(i).toString());
+            //System.out.print("\n");
+        //}
         return this.linkList;
     }
 
-    public ArrayList<String> getLinkContent(){
-        for(int i=0;i<linkContent.size();i++){
-            String [] token=linkContent.get(i).split("/");
-            int k= token.length;
-            linkContent.set(i,token[k-1]);
-         //   System.out.println(linkContent.get(i).toString());
+    public ArrayList<String> getLinkContent() {
+        for (int i = 0; i < linkContent.size(); i++) {
+            String[] token = linkContent.get(i).split("/");
+            int k = token.length;
+            linkContent.set(i, token[k - 1]);
+            //System.out.println(linkContent.get(i).toString());
         }
         return this.linkContent;
     }
 
-    public ArrayList<String>init() throws FileNotFoundException {
-        ArrayList<String> extension=new ArrayList<>();
-        File inputFile=new File(this.filePath);
-        Scanner input=new Scanner(inputFile);
-        while  (input.hasNext()){
-            String line=input.nextLine();
-            String [] lineArray=line.split("=");
-            for(String s:lineArray){
-                s=s+"$";
+    public ArrayList<String> init() throws FileNotFoundException {
+        ArrayList<String> extension = new ArrayList<>();
+        File inputFile = new File(this.filePath);
+        Scanner input = new Scanner(inputFile);
+        while (input.hasNext()) {
+            String line = input.nextLine();
+            String[] lineArray = line.split("=");
+            for (String s : lineArray) {
+                s = s + "$";
                 extension.add(s);
                 //System.out.println(s.toString());
             }
@@ -107,19 +107,28 @@ public class ParserPage implements Parser {
             }
             //System.out.println(matcher.group(1));
         }
-        ArrayList<String> extension=new ArrayList<>();
-        extension=this.init();
-        for(int i=0;i<linkList.size();i++){
-            for(int j=0;j<extension.size();j++) {
+        ArrayList<String> extension = new ArrayList<>();
+        extension = this.init();
+        for (int i = 0; i < linkList.size(); i++) {
+            for (int j = 0; j < extension.size(); j++) {
                 Pattern pattern_e = Pattern.compile(extension.get(j));
                 Matcher matcher_e = pattern_e.matcher(linkList.get(i));
-                if(matcher_e.find()) {
-                //System.out.println(linkList.get(i).toString());
-                linkContent.add(linkList.get(i));
-                linkList.remove(i);
+                if (matcher_e.find()) {
+                    //System.out.println(linkList.get(i).toString());
+                    linkContent.add(linkList.get(i));
+                    linkList.remove(i);
+                }
+                Pattern pattern_p = Pattern.compile(".php(.*?)$");
+                Matcher matcher_p = pattern_p.matcher(linkList.get(i));
+                if (matcher_p.find()) {
+                    linkList.remove(i);
+                }
+                Pattern pattern_feed = Pattern.compile("/feed(.*?)$");
+                Matcher matcher_feed = pattern_feed.matcher(linkList.get(i));
+                if (matcher_feed.find()) {
+                    linkList.remove(i);
                 }
             }
         }
     }
-
 }
