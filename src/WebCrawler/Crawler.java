@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
 
 public class Crawler {
 
@@ -16,16 +15,15 @@ public class Crawler {
     private Threads multithread;
     private ArrayList<String> linkList;
     private ArrayList<Visited> visitedLinks;
-    private final Lock mutex;
+    private Semaphore limitSemaphore;
 
     private Crawler() throws FileNotFoundException {
         this.linkList = new ArrayList<String>();
         this.visitedLinks = new ArrayList<Visited>();
         this.parser = new ParserFile();
-        this.mutex = new ReentrantLock(true);
     }
 
-    public Crawler run() throws IOException, URISyntaxException {
+    public Crawler run() throws IOException, URISyntaxException, InterruptedException {
         parser.parse();
         arguments = new UserData(parser);
         this.linkList = arguments.getUrlList();
@@ -49,46 +47,37 @@ public class Crawler {
             {
                 if (i == 0)      // if we're on the first level
                 {
+                    limitSemaphore.acquire();   // blocks a permit
                     linksOnTheCurrentLevel.add(linkList.get(i));                // we get the first argument link
                     multithread = new Threads(linksOnTheCurrentLevel.get(i));   // it will receive just the first element
                     multithread.start();
+                    multithread.join();
 
-                    mutex.lock();
-                    while(true)
-                    {
-                        if (multithread.getStatus() == true) {
-                            mutex.unlock();
-                            linksOnTheCurrentLevel.clear();                             // we rewrite the list
-                            linksOnTheCurrentLevel.addAll(multithread.getFinalList());
-                            break;
-                        }
-                    }
+                    linksOnTheCurrentLevel.clear();                             // we rewrite the list
+                    linksOnTheCurrentLevel.addAll(multithread.getFinalList());
+                    limitSemaphore.release();   // release a permit
+
                 }
-                else
-                {
+                else {
                     int nrOfNecessaryThreads;        // number of necessary threads
                     nrOfNecessaryThreads = linksOnTheCurrentLevel.size();
 
                     linksOnThePreviousLevel.addAll(linksOnTheCurrentLevel);
 
-                    for(int j = 0; j<nrOfNecessaryThreads; j++)
-                    {
-                        multithread = new Threads(linksOnThePreviousLevel.get(j));
-                        multithread.start();
-                    }
-                    for(int j = 0; j<nrOfNecessaryThreads; j++)
-                    {
-                        mutex.lock();
-                        while(true) {
-                            if (multithread.getStatus() == true) {
-                                mutex.unlock();
+                    for (int j = 0; j < nrOfNecessaryThreads; j++) {
+                        if (limitSemaphore.availablePermits() > 0) {
+                            limitSemaphore.acquire();   // blocks a permit
+                            multithread = new Threads(linksOnThePreviousLevel.get(j));
+                            multithread.start();
+                            //    multithread.join();
+                        } else {
+                            for (int k = 0; k < arguments.getNoOfThreads(); k++) {
+                                multithread.join();
                                 linksOnThePreviousLevel.addAll(multithread.getFinalList());  // extended list
-                                break;
+                                limitSemaphore.release();   // release a permit
                             }
                         }
                     }
-                    linksOnTheCurrentLevel.addAll(linksOnThePreviousLevel);     // actualize the list
-                    linksOnThePreviousLevel.clear();
                 }
             }
         }

@@ -2,27 +2,26 @@ package WebCrawler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Threads extends Thread {
     private String currentLink;
     private ParserPage parsedList;
     private ArrayList<Link> listOfNodes;
     private ArrayList<String> childLinks;
-    private boolean done = false;
+    private final Lock executionMutex;
 
     public Threads(String linkPassed) {
         currentLink = linkPassed;
         parsedList = new ParserPage(currentLink);
         listOfNodes = new ArrayList<Link>();
         childLinks = new ArrayList<String>();
+        executionMutex = new ReentrantLock(true);
     }
 
     public ArrayList<String> getFinalList() {
         return childLinks;
-    }
-
-    public boolean getStatus() {
-        return done;
     }
 
     @Override
@@ -34,6 +33,7 @@ public class Threads extends Thread {
         //   parsedList = new ParserPage(urlList.get(i));
         // won't work without try-catch, we're gonna solve this with the exception class
         try {
+            executionMutex.lock();
             parsedList.parse();
             childLinks.addAll(parsedList.getLinkList());        // save the links we discover
             content.addAll(parsedList.getLinkContent());        // get the content of the link (png, jpg, etc.)
@@ -74,9 +74,7 @@ public class Threads extends Thread {
                 node = new Link(content, currentLink, parent, childLinks);
                 listOfNodes.add(node);
             }
-
-
-            done = true;
+            executionMutex.unlock();
         } catch (IOException e) {
             e.printStackTrace();
         }

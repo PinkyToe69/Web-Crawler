@@ -1,4 +1,4 @@
-n_threads=50
+n_threads=5
 depth_level=2
 delay=100
 root_dir=D:/Download
