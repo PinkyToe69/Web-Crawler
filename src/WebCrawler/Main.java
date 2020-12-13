@@ -21,6 +21,8 @@ public class Main {
         ArrayList<String> _2020children = new ArrayList<>();
         _2020children.add("img1.jpg");
         _2020children.add("prezentare.html");
+        Link l7 = new Link(null, "img1.jpg", "2019", null);
+        Link l8 = new Link(null, "prezentare.html", "2019", null);
         Link l4 = new Link(null, "2020", "docs", _2020children);
         ArrayList<String> jsChildren = new ArrayList<>();
         jsChildren.add("index.js");
@@ -34,6 +36,8 @@ public class Main {
         vis.add(l4);
         vis.add(l5);
         vis.add(l6);
+        vis.add(l7);
+        vis.add(l8);
         Visited visited = new Visited(vis);
 
         BuildSitemap buildSitemap = new BuildSitemap("sitemap.txt", visited);
