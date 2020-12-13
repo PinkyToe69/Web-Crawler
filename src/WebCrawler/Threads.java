@@ -8,20 +8,23 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Threads extends Thread {
     private String currentLink;
     private ParserPage parsedList;
-    private ArrayList<Link> listOfNodes;
+    private Link node;
     private ArrayList<String> childLinks;
     private final Lock executionMutex;
 
     public Threads(String linkPassed) {
         currentLink = linkPassed;
         parsedList = new ParserPage(currentLink);
-        listOfNodes = new ArrayList<Link>();
         childLinks = new ArrayList<String>();
         executionMutex = new ReentrantLock(true);
     }
 
     public ArrayList<String> getFinalList() {
         return childLinks;
+    }
+
+    public Link getNode() {
+        return node;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class Threads extends Thread {
 
             //  Here we're gonna need the Link class to add the content and the link list for the current node (link)
             //  ... to do ...
-            Link node = null;
+            /*Link node = null;
             int ok = 1;
             for (int i = 0; i < listOfNodes.size(); i++)
                 if (listOfNodes.get(i).getLinkName() == currentLink) {
@@ -73,7 +76,11 @@ public class Threads extends Thread {
                     }
                 node = new Link(content, currentLink, parent, childLinks);
                 listOfNodes.add(node);
-            }
+            }*/
+            node=new Link(content, currentLink, childLinks);
+
+
+
             executionMutex.unlock();
         } catch (IOException e) {
             e.printStackTrace();

@@ -9,6 +9,10 @@ public class Visited {
         this.listOfNodes = listOfNodes;
     }
 
+    public Visited() {
+        this.listOfNodes=new ArrayList<Link>();
+    }
+
     public ArrayList<Link> getListOfNodes() {
         return listOfNodes;
     }
@@ -17,7 +21,22 @@ public class Visited {
         if(listOfNodes.contains(newLink))
             return;
         else {
-            listOfNodes.add(newLink);
+            String parent = null;
+            if(listOfNodes.size()==0){
+                newLink.setParrentLink(parent);
+                listOfNodes.add(newLink);
+            }
+            else {
+                for (int i = 0; i < listOfNodes.size(); i++)
+                    for (int j = 0; j < listOfNodes.get(i).getChildrenLink().size(); j++) {
+                        if (listOfNodes.get(i).getChildrenLink().get(j) == newLink.getLinkName()) {
+                            parent = listOfNodes.get(i).getChildrenLink().get(j);
+                            listOfNodes.get(i).setParrentLink(parent);
+                            listOfNodes.add(newLink);
+                            break;
+                        }
+                    }
+            }
         }
     }
 }
