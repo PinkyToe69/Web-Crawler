@@ -30,8 +30,8 @@ public class Visited {
                 for (int i = 0; i < listOfNodes.size(); i++)
                     for (int j = 0; j < listOfNodes.get(i).getChildrenLink().size(); j++) {
                         if (listOfNodes.get(i).getChildrenLink().get(j) == newLink.getLinkName()) {
-                            parent = listOfNodes.get(i).getChildrenLink().get(j);
-                            listOfNodes.get(i).setParrentLink(parent);
+                            parent = listOfNodes.get(i).getLinkName();
+                            newLink.setParrentLink(parent);
                             listOfNodes.add(newLink);
                             break;
                         }

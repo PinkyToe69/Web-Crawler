@@ -44,6 +44,7 @@ public class Crawler {
         {
             ArrayList<String> linksOnTheCurrentLevel = new ArrayList<String>();
             ArrayList<String> linksOnThePreviousLevel = new ArrayList<String>();
+            ArrayList<Link> listOfNodes = new ArrayList<Link>();
 
             for (int i = 0; i < depth; i++)
             {
@@ -82,7 +83,17 @@ public class Crawler {
                                 System.out.println("Parsing " + listOfThreads.get(k).getCurrentLink());
                                 listOfThreads.get(k).join();
                                 node = listOfThreads.get(k).getNode();
-                                visitedLinks.appendList(node);
+                                listOfNodes = visitedLinks.getListOfNodes();
+
+                                for(int o = 0; o<listOfNodes.size(); o++)
+                                {
+                                    if(node != null) {
+                                        if (listOfNodes.get(o).getLinkName() != node.getParrentLink()) {
+                                            visitedLinks.appendList(node);
+                                        }
+                                    }
+                                }
+
                                 linksOnThePreviousLevel.addAll(listOfThreads.get(k).getFinalList());  // extended list
                                 limitSemaphore.release();   // release a permit
                             }
@@ -92,6 +103,8 @@ public class Crawler {
                 }
             }
         }
+        BuildSitemap buildSitemap = new BuildSitemap("sitemap.txt", visitedLinks);
+        buildSitemap.createSitemap();
         return null;
     }
 
