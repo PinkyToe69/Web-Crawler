@@ -43,9 +43,9 @@ public class Main {
         BuildSitemap buildSitemap = new BuildSitemap("sitemap.txt", visited);
 
         buildSitemap.createSitemap();*/
-        //ParserPage p = new ParserPage("https://mta.ro/");
-       // p.parse();
+        //ParserPage p = new ParserPage("https://www.geeksforgeeks.org/");
+        //p.parse();
         //p.getLinkList();
-       // p.getLinkContent();
+        //p.getLinkContent();
     }
 }
