@@ -5,10 +5,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
         Crawler application = Crawler.getInstance();
-        //application.run();
-
+        application.run();
+        /*
         ArrayList<String> rootChildren = new ArrayList<>();
         rootChildren.add("docs");
         rootChildren.add("js");
@@ -42,10 +42,10 @@ public class Main {
 
         BuildSitemap buildSitemap = new BuildSitemap("sitemap.txt", visited);
 
-        buildSitemap.createSitemap();
-    //    ParserPage p = new ParserPage("https://mta.ro/");
-    //    p.parse();
-    //    p.getLinkList();
-    //    p.getLinkContent();
+        buildSitemap.createSitemap();*/
+        //ParserPage p = new ParserPage("https://mta.ro/");
+       // p.parse();
+        //p.getLinkList();
+       // p.getLinkContent();
     }
 }

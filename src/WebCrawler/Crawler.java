@@ -14,12 +14,13 @@ public class Crawler {
     private ParserFile parser;
     private Threads multithread;
     private ArrayList<String> linkList;
-    private ArrayList<Visited> visitedLinks;
+    private Visited visitedLinks;
     private Semaphore limitSemaphore;
+    private Link node;
 
     private Crawler() throws FileNotFoundException {
         this.linkList = new ArrayList<String>();
-        this.visitedLinks = new ArrayList<Visited>();
+        this.visitedLinks = new Visited();
         this.parser = new ParserFile();
     }
 
@@ -34,6 +35,7 @@ public class Crawler {
         //============================
         int nrOfLinksPassed = linkList.size();
         int depth = arguments.getDepthLevel();
+        limitSemaphore=new Semaphore(arguments.getNoOfThreads());
 
         System.out.println("The depth is " + depth);
         System.out.println(nrOfLinksPassed + " links had been passed");
@@ -52,6 +54,8 @@ public class Crawler {
                     multithread = new Threads(linksOnTheCurrentLevel.get(i));   // it will receive just the first element
                     multithread.start();
                     multithread.join();
+                    node = multithread.getNode();
+                    visitedLinks.appendList(node);
 
                     linksOnTheCurrentLevel.clear();                             // we rewrite the list
                     linksOnTheCurrentLevel.addAll(multithread.getFinalList());
@@ -73,6 +77,8 @@ public class Crawler {
                         } else {
                             for (int k = 0; k < arguments.getNoOfThreads(); k++) {
                                 multithread.join();
+                                node = multithread.getNode();
+                                visitedLinks.appendList(node);
                                 linksOnThePreviousLevel.addAll(multithread.getFinalList());  // extended list
                                 limitSemaphore.release();   // release a permit
                             }
