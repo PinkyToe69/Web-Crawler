@@ -16,7 +16,11 @@ public class Threads extends Thread {
         currentLink = linkPassed;
         parsedList = new ParserPage(currentLink);
         childLinks = new ArrayList<String>();
-        executionMutex = new ReentrantLock(true);
+        executionMutex = new ReentrantLock(false);
+    }
+
+    public String getCurrentLink() {
+        return currentLink;
     }
 
     public ArrayList<String> getFinalList() {
@@ -78,8 +82,6 @@ public class Threads extends Thread {
                 listOfNodes.add(node);
             }*/
             node=new Link(content, currentLink, childLinks);
-
-
 
             executionMutex.unlock();
         } catch (IOException e) {
