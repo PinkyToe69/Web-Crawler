@@ -64,6 +64,7 @@ public class Crawler {
                 }
                 else {
                     int nrOfNecessaryThreads;        // number of necessary threads
+                    ArrayList<Threads> listOfThreads = new ArrayList<Threads>();
                     nrOfNecessaryThreads = linksOnTheCurrentLevel.size();
 
                     linksOnThePreviousLevel.addAll(linksOnTheCurrentLevel);
@@ -72,14 +73,18 @@ public class Crawler {
                         if (limitSemaphore.availablePermits() > 0) {
                             limitSemaphore.acquire();   // blocks a permit
                             multithread = new Threads(linksOnThePreviousLevel.get(j));
+                            listOfThreads.add(multithread);
                             multithread.start();
+                            System.out.println("Starting parsing " + multithread.getCurrentLink());
                             //    multithread.join();
                         } else {
                             for (int k = 0; k < arguments.getNoOfThreads(); k++) {
-                                multithread.join();
-                                node = multithread.getNode();
+                                System.out.println("Parsing " + listOfThreads.get(k).getCurrentLink());
+                                listOfThreads.get(k).join();
+                                node = listOfThreads.get(k).getNode();
                                 visitedLinks.appendList(node);
-                                linksOnThePreviousLevel.addAll(multithread.getFinalList());  // extended list
+                                linksOnThePreviousLevel.addAll(listOfThreads.get(k).getFinalList());  // extended list
+                                listOfThreads.remove(k);
                                 limitSemaphore.release();   // release a permit
                             }
                         }
