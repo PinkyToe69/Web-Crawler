@@ -31,8 +31,8 @@ public class Threads extends Thread{
     @Override
     public void run()
     {
-       //   to insert try-catch later...
-    //    int numberOfURLs = urlList.size();
+        //   to insert try-catch later...
+        //    int numberOfURLs = urlList.size();
         ArrayList<String> content = new ArrayList<String>();
 
         //   parsedList = new ParserPage(urlList.get(i));
@@ -42,25 +42,45 @@ public class Threads extends Thread{
             childLinks.addAll(parsedList.getLinkList());        // save the links we discover
             content.addAll(parsedList.getLinkContent());        // get the content of the link (png, jpg, etc.)
 
-        //    for(int i = 0; i<childLinks.size(); i++)
-        //    {
-        //        System.out.println("Thread "+ Thread.currentThread().getId() +
-        //                " found the following links on link " + currentLink);
-        //        System.out.println(childLinks.get(i));
-        //        System.out.println();
-        //     }
-        //    System.out.println("Content size is: " + content.size());
-        //    System.out.println("Thread "+ Thread.currentThread().getId() +
-        //            " found the following content on link " + currentLink);
-        //    for(int j = 0; j<content.size(); j++)
-        //    {
-        //        System.out.println(content.get(j));
-        //    }
-        //    System.out.println("============================================");
+            //    for(int i = 0; i<childLinks.size(); i++)
+            //    {
+            //        System.out.println("Thread "+ Thread.currentThread().getId() +
+            //                " found the following links on link " + currentLink);
+            //        System.out.println(childLinks.get(i));
+            //        System.out.println();
+            //     }
+            //    System.out.println("Content size is: " + content.size());
+            //    System.out.println("Thread "+ Thread.currentThread().getId() +
+            //            " found the following content on link " + currentLink);
+            //    for(int j = 0; j<content.size(); j++)
+            //    {
+            //        System.out.println(content.get(j));
+            //    }
+            //    System.out.println("============================================");
 
 
             //  Here we're gonna need the Link class to add the content and the link list for the current node (link)
             //  ... to do ...
+            Link node=null;
+            int ok=1;
+            for(int i=0;i<listOfNodes.size();i++)
+                if(listOfNodes.get(i).getLinkName()==currentLink)
+                { ok=0;
+                break;}
+            if(ok==1){
+                String parent=null;
+                for(int i=0;i<listOfNodes.size();i++)
+                    for(int j=0;j<listOfNodes.get(i).getChildrenLink().size();j++)
+                    {
+                        if(listOfNodes.get(i).getChildrenLink().get(j)==currentLink)
+                            parent=listOfNodes.get(i).getParrentLink();
+                    }
+                node=new Link(content,currentLink,parent,childLinks);
+                listOfNodes.add(node);
+            }
+
+
+
 
             done = true;
         } catch (IOException e) {

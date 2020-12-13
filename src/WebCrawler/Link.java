@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class Link {
 
-    private String content,currentLinkName,parrentLink;
+    private String currentLinkName,parrentLink;
     private ArrayList<String>childrenLinks;
-    public Link(String content,String currentLinkName,String parrentLink,ArrayList<String>childrenLinks){
+    private ArrayList<String>content;
+    public Link(ArrayList<String>content,String currentLinkName,String parrentLink,ArrayList<String>childrenLinks){
         this.content=content;
         this.currentLinkName=currentLinkName;
         this.parrentLink=parrentLink;
@@ -21,7 +22,7 @@ public class Link {
     public ArrayList<String> getChildrenLink(){
         return childrenLinks;
     }
-    public String getContent(){
+    public ArrayList<String> getContent(){
         return content;
     }
 
