@@ -25,10 +25,10 @@ public class ParserPage implements Parser {
     }
 
     public ArrayList<String> getLinkList() {
-        //for (int i = 0; i < linkList.size(); i++) {
-            //System.out.print(linkList.get(i).toString());
-            //System.out.print("\n");
-        //}
+       // for (int i = 0; i < linkList.size(); i++) {
+       //     System.out.print(linkList.get(i).toString());
+       //     System.out.print("\n");
+       // //}
         return this.linkList;
     }
 
@@ -37,7 +37,7 @@ public class ParserPage implements Parser {
             String [] token=linkContent.get(i).split("/");
             int k= token.length;
             linkContent.set(i,token[k-1]);
-            //System.out.println(linkContent.get(i).toString());
+         //   System.out.println(linkContent.get(i).toString());
         }
         return this.linkContent;
     }
