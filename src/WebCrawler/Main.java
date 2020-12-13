@@ -12,20 +12,20 @@ public class Main {
         ArrayList<String> rootChildren = new ArrayList<>();
         rootChildren.add("docs");
         rootChildren.add("js");
-        Link l1 = new Link("c","mta.ro",null, rootChildren);
+        Link l1 = new Link(null,"mta.ro",null, rootChildren);
         ArrayList<String> docsChildren = new ArrayList<>();
         docsChildren.add("2019");
         docsChildren.add("2020");
-        Link l2 = new Link("c", "docs", "root", docsChildren);
-        Link l3 = new Link("c", "2019", "docs", null);
+        Link l2 = new Link(null, "docs", "root", docsChildren);
+        Link l3 = new Link(null, "2019", "docs", null);
         ArrayList<String> _2020children = new ArrayList<>();
         _2020children.add("img1.jpg");
         _2020children.add("prezentare.html");
-        Link l4 = new Link("c", "2020", "docs", _2020children);
+        Link l4 = new Link(null, "2020", "docs", _2020children);
         ArrayList<String> jsChildren = new ArrayList<>();
         jsChildren.add("index.js");
-        Link l5 = new Link("c", "js", "root", jsChildren);
-        Link l6 = new Link("c", "index.js", "js", null);
+        Link l5 = new Link(null, "js", "root", jsChildren);
+        Link l6 = new Link(null, "index.js", "js", null);
 
         ArrayList<Link> vis = new ArrayList<>();
         vis.add(l1);

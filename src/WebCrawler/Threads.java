@@ -3,34 +3,30 @@ package WebCrawler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Threads extends Thread{
+public class Threads extends Thread {
     private String currentLink;
     private ParserPage parsedList;
     private ArrayList<Link> listOfNodes;
     private ArrayList<String> childLinks;
     private boolean done = false;
 
-    public Threads(String linkPassed)
-    {
+    public Threads(String linkPassed) {
         currentLink = linkPassed;
         parsedList = new ParserPage(currentLink);
         listOfNodes = new ArrayList<Link>();
         childLinks = new ArrayList<String>();
     }
 
-    public ArrayList<String> getFinalList()
-    {
+    public ArrayList<String> getFinalList() {
         return childLinks;
     }
 
-    public boolean getStatus()
-    {
+    public boolean getStatus() {
         return done;
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         //   to insert try-catch later...
         //    int numberOfURLs = urlList.size();
         ArrayList<String> content = new ArrayList<String>();
@@ -61,25 +57,23 @@ public class Threads extends Thread{
 
             //  Here we're gonna need the Link class to add the content and the link list for the current node (link)
             //  ... to do ...
-            Link node=null;
-            int ok=1;
-            for(int i=0;i<listOfNodes.size();i++)
-                if(listOfNodes.get(i).getLinkName()==currentLink)
-                { ok=0;
-                break;}
-            if(ok==1){
-                String parent=null;
-                for(int i=0;i<listOfNodes.size();i++)
-                    for(int j=0;j<listOfNodes.get(i).getChildrenLink().size();j++)
-                    {
-                        if(listOfNodes.get(i).getChildrenLink().get(j)==currentLink)
-                            parent=listOfNodes.get(i).getParrentLink();
+            Link node = null;
+            int ok = 1;
+            for (int i = 0; i < listOfNodes.size(); i++)
+                if (listOfNodes.get(i).getLinkName() == currentLink) {
+                    ok = 0;
+                    break;
+                }
+            if (ok == 1) {
+                String parent = null;
+                for (int i = 0; i < listOfNodes.size(); i++)
+                    for (int j = 0; j < listOfNodes.get(i).getChildrenLink().size(); j++) {
+                        if (listOfNodes.get(i).getChildrenLink().get(j) == currentLink)
+                            parent = listOfNodes.get(i).getParrentLink();
                     }
-                node=new Link(content,currentLink,parent,childLinks);
+                node = new Link(content, currentLink, parent, childLinks);
                 listOfNodes.add(node);
             }
-
-
 
 
             done = true;
