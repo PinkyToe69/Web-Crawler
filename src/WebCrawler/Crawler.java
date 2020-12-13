@@ -84,9 +84,9 @@ public class Crawler {
                                 node = listOfThreads.get(k).getNode();
                                 visitedLinks.appendList(node);
                                 linksOnThePreviousLevel.addAll(listOfThreads.get(k).getFinalList());  // extended list
-                                listOfThreads.remove(k);
                                 limitSemaphore.release();   // release a permit
                             }
+                            listOfThreads.clear();
                         }
                     }
                 }
