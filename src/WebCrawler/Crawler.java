@@ -17,6 +17,7 @@ public class Crawler {
     private Visited visitedLinks;
     private Semaphore limitSemaphore;
     private Link node;
+    private LogManager logger;
 
     private Crawler() throws FileNotFoundException {
         this.linkList = new ArrayList<String>();
@@ -28,9 +29,8 @@ public class Crawler {
         parser.parse();
         arguments = new UserData(parser);
         this.linkList = arguments.getUrlList();
-    //    for(String line : linkList) {
-    //        System.out.println(line);
-    //    }
+        this.logger = new LogManager(arguments.getLogLevel());
+
 
         //============================
         int nrOfLinksPassed = linkList.size();
@@ -76,10 +76,12 @@ public class Crawler {
                             multithread = new Threads(linksOnThePreviousLevel.get(j));
                             listOfThreads.add(multithread);
                             multithread.start();
+                            logger.writeMessage(multithread.getCurrentLink());////////////////////////////
                             System.out.println("Starting parsing " + multithread.getCurrentLink());
                             //    multithread.join();
                         } else {
                             for (int k = 0; k < arguments.getNoOfThreads(); k++) {
+                                logger.writeMessage(listOfThreads.get(k).getCurrentLink());/////////////////////
                                 System.out.println("Parsing " + listOfThreads.get(k).getCurrentLink());
                                 listOfThreads.get(k).join();
                                 node = listOfThreads.get(k).getNode();
