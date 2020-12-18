@@ -2,6 +2,13 @@ package WebCrawler;
 
 import java.util.ArrayList;
 
+/**
+ *Clasa Link are ca rol preluarea continutului url-urilor parsate pe un thread.
+ * Se va forma o lista ce va fi populata in clasa Crawler.
+ *@see Crawler
+ * @author Comandasu Andrei
+ */
+
 public class Link {
 
     private String currentLinkName,parrentLink;
