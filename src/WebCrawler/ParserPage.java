@@ -1,5 +1,7 @@
 package WebCrawler;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -21,8 +23,10 @@ public class ParserPage implements Parser {
         this.url = new String();
         this.url = url;
         this.urlContent = new String();
-        this.filePath = new String("src/WebCrawler/nume_sugestiv.txt");
+        this.filePath = new String(Paths.get("").toAbsolutePath().toString() + "\\WebCrawler\\nume_sugestiv.txt");
     }
+
+    //Path path = FileSystems.getDefault().getPath("Foo.txt");
 
     public ArrayList<String> getLinkList() {
         //for (int i = 0; i < linkList.size(); i++) {
@@ -45,6 +49,7 @@ public class ParserPage implements Parser {
     public ArrayList<String> init() throws FileNotFoundException {
         ArrayList<String> extension = new ArrayList<>();
         File inputFile = new File(this.filePath);
+        System.out.print(filePath + "\n");
         Scanner input = new Scanner(inputFile);
         while (input.hasNext()) {
             String line = input.nextLine();
@@ -70,6 +75,7 @@ public class ParserPage implements Parser {
             }
         } while (i != -1);
         //System.out.print(this.urlContent.toString());
+
     }
 
     public void parse() throws IOException {

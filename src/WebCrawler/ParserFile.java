@@ -17,8 +17,8 @@ public class ParserFile implements Parser {
     ArrayList<String> urlList;
 
     public ParserFile() throws FileNotFoundException {
-        this.configFile = new File("src/WebCrawler/config.txt");
-        this.urlFile = new File("src/WebCrawler/url.txt");
+        this.configFile = new File(Paths.get("").toAbsolutePath().toString() + "\\WebCrawler\\config.txt");
+        this.urlFile = new File(Paths.get("").toAbsolutePath().toString() + "\\WebCrawler\\url.txt");
         this.arguments = new ArrayList<>();
         this.list = new ArrayList<>();
     }
