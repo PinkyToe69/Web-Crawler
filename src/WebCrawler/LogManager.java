@@ -3,6 +3,7 @@ package WebCrawler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -16,7 +17,7 @@ public class LogManager {
     private String url;
 
     public LogManager(int log_level) {
-        this.logFile = new File("src/WebCrawler/logger.txt");
+        this.logFile = new File(Paths.get("").toAbsolutePath().toString() + "\\logger.txt");
         this.log_level = log_level;
         //this.message = null;
         Date today = Calendar.getInstance().getTime();
