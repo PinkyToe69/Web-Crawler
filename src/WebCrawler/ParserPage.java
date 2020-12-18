@@ -38,7 +38,7 @@ public class ParserPage implements Parser {
         this.url = new String();
         this.url = url;
         this.urlContent = new String();
-        this.filePath = new String(Paths.get("").toAbsolutePath().toString() + "\\WebCrawler\\extensii.txt");
+        this.filePath = new String(Paths.get("").toAbsolutePath().toString() + "\\src\\WebCrawler\\extensii.txt");
     }
 
     /**

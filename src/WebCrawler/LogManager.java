@@ -43,7 +43,7 @@ public class LogManager {
      *                  va fi scris un mesaj corespunzator
      */
     public LogManager(int log_level) {
-        this.logFile = new File(Paths.get("").toAbsolutePath().toString() + "\\WebCrawler\\logger.txt");
+        this.logFile = new File(Paths.get("").toAbsolutePath().toString() + "\\src\\WebCrawler\\logger.txt");
         this.log_level = log_level;
         //this.message = null;
         Date today = Calendar.getInstance().getTime();
