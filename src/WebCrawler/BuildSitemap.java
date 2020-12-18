@@ -30,21 +30,37 @@ public class BuildSitemap {
         for(int i = 0; i < tabs; i++){
             fileWriter.write('\t');
         }
-        fileWriter.write(root.getLinkName());
-        fileWriter.write('\n');
-       for(int k=0;k<root.getContent().size();k++) {
-            fileWriter.write(root.getContent().get(k));
+        if(tabs==0)
+        {
+            fileWriter.write(root.getLinkName());
             fileWriter.write('\n');
+        }
+
+       for(int k=0;k<root.getContent().size();k++) {
+           for (int i = 0; i < tabs; i++) {
+               fileWriter.write('\t');
+           }
+           if(tabs==0)
+           {
+               fileWriter.write('\t');
+           }
+           fileWriter.write(root.getContent().get(k));
+           fileWriter.write('\n');
+
+       }
+        for(int m=0;m<root.getChildrenLink().size();m++)
+        {
+            for (int i = 0; i < tabs; i++) {
+                fileWriter.write('\t');
+            }
             fileWriter.write('\t');
-        }
-        ArrayList<String> childrenNames = root.getChildrenLink(); // url-urile copiilor ca stringuri
-        if(childrenNames == null){
-            return;
-        }
-        for(String childName : childrenNames){
-            Link child = getChild(childName);
+            fileWriter.write(root.getChildrenLink().get(m));
+            fileWriter.write('\n');
+
+            Link child = getChild(root.getChildrenLink().get(m));
             writeMe(child, fileWriter, tabs + 1);
         }
+
     }
 
     public void createSitemap(){
