@@ -7,8 +7,46 @@ import java.util.ArrayList;
 
 import java.util.concurrent.Semaphore;
 
-public class Crawler{
 
+public class Crawler{
+=======
+/**
+ * Această clasă implementează metodele necesare pentru a rula aplicația,
+ * și este de tip Singleton (poate avea o singură instanță a clasei
+ * la un moment dat)
+ * @author Frîncu Andreea (lines 1-70, 152-169)
+ * @author Floriștean Liviu (lines 75-150)
+ */
+public class Crawler {
+
+    /**
+     * Descrierea membrilor clasei
+     * <b>instance</b> este un membru static de tip Crawler
+     * cand vom apela metoda getInstance() se returneaza aceasta variabila
+     * in loc sa se instantieze din nou clasa
+     *
+     * <b>arguments</b> este un membru de tip UserData care contine toate
+     * argumentele parsate din fisierul config.txt
+     *
+     * <b>parser</b> este un membru de tip ParserFile care populeaza obiectul
+     * <b>arguments</b> de tip UserData
+     *
+     * <b>multithread</b> este un obiect de tip Threads
+     *
+     * <b>linkList</b> este un membru care contine lista de url-uri
+     * care trebuie vizitate (din fisierul url.txt)
+     *
+     * <b>visitedLinks</b> este un membru care contine lista de url-uri vizitate
+     *
+     * <b>limitSemaphore</b> este un obiect de tip Semaphore care asigura ca se
+     * pastreaza numarul de thread-uri cu care trebuie rulata aplicatia
+     *
+     * <b>node</b> este un obiect de tip Link in care se salveaza toate
+     * datele obtinute in urma parsarii
+     *
+     * <b>logger</b> este un obiect de tip LogManager care va scrie înregistrări
+     * diferite în funcție de logLevel într-un fișier
+     */
     private static Crawler instance = null;
     private UserData arguments;
     private ParserFile parser;
@@ -19,6 +57,10 @@ public class Crawler{
     private Link node;
     private LogManager logger;
 
+    /**
+     * Constructorul clasei <b>Crawler</b>
+     * @throws FileNotFoundException
+     */
     private Crawler() throws FileNotFoundException {
         this.linkList = new ArrayList<String>();
         this.visitedLinks = new Visited();
@@ -85,6 +127,8 @@ public class Crawler{
                 {
                     limitSemaphore.acquire();                                   // blockeaza (se ia un permit)
                     linksOnTheCurrentLevel.add(linkList.get(link));                // luam primul link dat ca argument
+=======
+                    linksOnTheCurrentLevel.add(linkList.get(i));                // luam primul link dat ca argument
                     multithread = new Threads(linksOnTheCurrentLevel.get(i));   // se va lua doar primul link pentru ca stim ca e radacina
                     multithread.start();
                     System.out.println("Starting parsing " + multithread.getCurrentLink() + " on thread " + multithread.getId());
@@ -112,11 +156,18 @@ public class Crawler{
                             multithread.start();
                             activeThreads++;
                             logger.writeMessage(multithread.getCurrentLink());
+
                             System.out.println("Starting parsing " + multithread.getCurrentLink() + " on thread " + multithread.getId());
                         } else {
                             for (int k = 0; k < activeThreads; k++) {
                                 logger.writeMessage(listOfThreads.get(k).getCurrentLink());
                                 System.out.println("Parsing " + listOfThreads.get(k).getCurrentLink() + " on thread " + listOfThreads.get(k).getId());
+=======
+                            //   System.out.println("Starting parsing " + multithread.getCurrentLink() + " on thread " + multithread.getId());
+                        } else {
+                            for (int k = 0; k < activeThreads; k++) {
+                                logger.writeMessage(listOfThreads.get(k).getCurrentLink());
+                                //    System.out.println("Parsing " + listOfThreads.get(k).getCurrentLink() + " on thread " + listOfThreads.get(k).getId());
                                 listOfThreads.get(k).join();
                                 node = listOfThreads.get(k).getNode();
                                 listOfNodes = visitedLinks.getListOfNodes();
@@ -139,15 +190,26 @@ public class Crawler{
                 }
             }
         }
+
         BuildSitemap buildSitemap = new BuildSitemap("sitemap.txt", visitedLinks);
         buildSitemap.createSitemap();
         return null;
     }
 
+    /**
+     * Obține numărul de thread-uri din Crawler
+     * @return
+     */
     public int getNoOfThreads() {
         return arguments.getNoOfThreads();
     }
 
+    /**
+     * Creează un obiect al clasei cu numele instance
+     * și îl returnează variabilei
+     * @return <b>instance</b>
+     * @throws FileNotFoundException
+     */
     public static Crawler getInstance() throws FileNotFoundException {
         if (instance == null)
             instance = new Crawler();

@@ -46,9 +46,15 @@ public class Threads extends Thread {
     private final Lock executionMutex;
 
     /**
+
      * Constructorul clasei Threads.
      * @param linkPassed este link-ul care trebuie parsat.
      */
+=======
+            * Constructorul clasei Threads.
+     * @param linkPassed este link-ul care trebuie parsat.
+            */
+
 
     public Threads(String linkPassed) {
         currentLink = linkPassed;
@@ -62,6 +68,9 @@ public class Threads extends Thread {
      * care este parsat acum.
      * @return va returna numele link-ului.
      */
+
+=======
+
     public String getCurrentLink() {
         return currentLink;
     }
@@ -100,16 +109,19 @@ public class Threads extends Thread {
      *
      * <p>Metoda abordeaza mecanisme de tratare a exceptiilor.</p>
      */
+
+=======
+
+
     @Override
     public void run() {
         ArrayList<String> content = new ArrayList<String>();
 
-        // won't work without try-catch, we're gonna solve this with the exception class
         try {
             executionMutex.lock();
             parsedList.parse();
-            childLinks.addAll(parsedList.getLinkList());        // save the links we discover
-            content.addAll(parsedList.getLinkContent());        // get the content of the link (png, jpg, etc.)
+            childLinks.addAll(parsedList.getLinkList());
+            content.addAll(parsedList.getLinkContent());
 
             node=new Link(content, currentLink, childLinks);
 

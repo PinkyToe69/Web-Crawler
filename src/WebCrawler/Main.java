@@ -9,8 +9,7 @@ public class Main {
         Crawler application = Crawler.getInstance();
         application.run();
 
-        /* Testare BuilSitemap
-        // primul nivel
+        /** Testare BuilSitemap
 
         ArrayList<String> children_level1=new ArrayList<String>();
         children_level1.add("child1");
@@ -22,8 +21,6 @@ public class Main {
         content_level1.add("content3");
         Link root=new Link(content_level1, "root", children_level1);
         root.setParrentLink(null);
-
-        // al doilea nivel
 
         ArrayList<String> children_level2A=new ArrayList<String>();
         ArrayList<String> children_level2B=new ArrayList<String>();

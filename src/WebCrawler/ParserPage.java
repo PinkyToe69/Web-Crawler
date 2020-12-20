@@ -1,12 +1,25 @@
 package WebCrawler;
 
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 import java.net.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Aceasta clasa implementeaza metodele necesare
+ *pentru extragerea link-urilor dintr-un URL dat
+ * si a continutului acestuia.
+ *
+ * @author Marginean Florin
+ */
+
 public class ParserPage implements Parser {
+
+    /**
+     * Descrierea membriilor
+     */
 
     private ArrayList<String> linkList;
     private ArrayList<String> linkContent;
@@ -14,23 +27,35 @@ public class ParserPage implements Parser {
     private String urlContent;
     private String filePath;
 
-    public ParserPage(String url) {
+    /**
+     * Constructorul clasei ParserPage
+     * @param url Link-ul paginii pe care dorim sa o parsam.
+     */
 
+    public ParserPage(String url) {
         this.linkList = new ArrayList<>();
         this.linkContent = new ArrayList<>();
         this.url = new String();
         this.url = url;
         this.urlContent = new String();
-        this.filePath = new String("src/WebCrawler/nume_sugestiv.txt");
+        this.filePath = new String(Paths.get("").toAbsolutePath().toString() + "\\src\\WebCrawler\\extensii.txt");
     }
 
+    /**
+     * Returneaza lista de link-uri care
+     * se gasesc in pagina respectiva.
+     * @return returneaza linkList
+     */
+
     public ArrayList<String> getLinkList() {
-        //for (int i = 0; i < linkList.size(); i++) {
-            //System.out.print(linkList.get(i).toString());
-            //System.out.print("\n");
-        //}
         return this.linkList;
     }
+
+    /**
+     * Returneaza lista in care sunt salvate fisierle
+     * pe care le contine URL-ul respectiv.
+     * @return returneaza linkContent
+     */
 
     public ArrayList<String> getLinkContent() {
         for (int i = 0; i < linkContent.size(); i++) {
@@ -41,6 +66,13 @@ public class ParserPage implements Parser {
         }
         return this.linkContent;
     }
+
+    /**
+     * Returneaza o lista de extensii
+     * pe care am folosit-o pentru a extrage
+     * continutul din codul sursa HTML.
+     * @return returneaza extension
+     */
 
     public ArrayList<String> init() throws FileNotFoundException {
         ArrayList<String> extension = new ArrayList<>();
@@ -58,6 +90,10 @@ public class ParserPage implements Parser {
         return extension;
     }
 
+    /**
+     * Salveaza codul sursa HTML pentru un url dat.
+     */
+
     public void get_urlContent() throws IOException {
         URL obj = new URL(this.url);
         URLConnection con = obj.openConnection();
@@ -71,6 +107,15 @@ public class ParserPage implements Parser {
         } while (i != -1);
         //System.out.print(this.urlContent.toString());
     }
+
+    /**
+     * Aceasta metoda realizeaza parsarea propriu-zisa.
+     * Se cauta toate link-urile dupa
+     * o expresie regulata "href=\"(.*?)\"".
+     * Tot aici se populeaza lista in care se afla informatiile
+     * necesare pentru crearea sitemap-ului, fisierele pe care
+     * le contine url-ul rspectiv.
+     */
 
     public void parse() throws IOException {
         this.get_urlContent();
