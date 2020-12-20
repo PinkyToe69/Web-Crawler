@@ -47,7 +47,7 @@ public class LogManager {
         this.log_level = log_level;
         //this.message = null;
         Date today = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         this.date = dateFormat.format(today);
     }
 
