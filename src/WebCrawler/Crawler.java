@@ -11,8 +11,8 @@ import java.util.concurrent.Semaphore;
  * Această clasă implementează metodele necesare pentru a rula aplicația,
  * și este de tip Singleton (poate avea o singură instanță a clasei
  * la un moment dat)
- * @author Frîncu Andreea (lines 1-70, 152-169)
- * @author Floriștean Liviu (lines 75-150)
+ * @author Frîncu Andreea (lines 1-65, 187-207)
+ * @author Floriștean Liviu (lines 67-185)
  */
 public class Crawler {
 
@@ -123,7 +123,7 @@ public class Crawler {
                 if (i == 0)                                                     // daca suntem pe primul nivel
                 {
                     limitSemaphore.acquire();                                   // blockeaza (se ia un permit)
-                    linksOnTheCurrentLevel.add(linkList.get(i));                // luam primul link dat ca argument
+                    linksOnTheCurrentLevel.add(linkList.get(link));                // luam primul link dat ca argument
                     multithread = new Threads(linksOnTheCurrentLevel.get(i));   // se va lua doar primul link pentru ca stim ca e radacina
                     multithread.start();
                     System.out.println("Starting parsing " + multithread.getCurrentLink() + " on thread " + multithread.getId());
